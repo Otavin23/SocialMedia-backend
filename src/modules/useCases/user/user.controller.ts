@@ -34,14 +34,16 @@ class UserController {
     const find = await this.UserServices.findUser({ email });
 
     if (!find)
-      return response.status(404).json({ message: 'User does not exist' });
+      return response
+        .status(404)
+        .json({ message: 'email or password are incorrect' });
 
     const checkPassword = compareSync(password, find.password);
 
     if (!checkPassword)
       return response
         .status(401)
-        .json({ message: 'and username or password are incorrect' });
+        .json({ message: 'email or password are incorrect' });
 
     const token = sign(
       {
@@ -54,6 +56,15 @@ class UserController {
     );
 
     return response.status(200).json(token);
+  }
+
+  @Post('upload/image')
+  async uploadImage(@Req() request: Request, @Res() response: Response) {
+    const { userId, image } = request.body;
+
+    const imageUpload = await this.UserServices.imageUpload(userId, image);
+
+    return response.status(200).json(imageUpload);
   }
 
   @Get('me/verify')

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { AppDataSource } from 'src/database/data-source';
 import { User } from 'src/entity/User';
 import { genSaltSync, hashSync } from 'bcrypt';
+import { v2 as cloudinary } from 'cloudinary';
 
 interface IFInd {
   name?: string;
@@ -32,6 +33,23 @@ class UserService {
     const find = await this.bd_user.findOneBy(user);
 
     return find;
+  }
+
+  async imageUpload(id: string, image: string) {
+    const user = await this.bd_user.findOneBy({ id });
+
+    const imageUpload = await cloudinary.uploader.upload(image, {
+      public_id: 'olimpic',
+      folder: 'avatars',
+      resource_type: 'image',
+      format: 'svg',
+      allowed_formats: ['jpg', 'webp', 'png'],
+    });
+
+    user.avatar = imageUpload.url;
+
+    await this.bd_user.save(user);
+    return user;
   }
 }
 
