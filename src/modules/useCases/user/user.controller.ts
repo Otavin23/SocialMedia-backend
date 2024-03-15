@@ -1,10 +1,20 @@
-import { Controller, Get, Post, Req, Res } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Req,
+  Res,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
 import { Request, Response } from 'express';
 
 import { UserService } from './app.service';
 
 import { compareSync } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('user')
 class UserController {
@@ -59,14 +69,50 @@ class UserController {
   }
 
   @Post('upload/image')
-  async uploadImage(@Req() request: Request, @Res() response: Response) {
-    const { userId, image } = request.body;
+  @UseInterceptors(FileInterceptor('avatar'))
+  async uploadImage(
+    @Req() request: Request,
+    @UploadedFile() avatar,
+    @Res() response: Response,
+  ) {
+    const { userId } = request.body;
+    const { mimetype } = request.file;
 
-    const imageUpload = await this.UserServices.imageUpload(userId, image);
+    const b64 = Buffer.from(request.file.buffer).toString('base64');
 
-    return response.status(200).json(imageUpload);
+    const pathImage = 'data:' + mimetype + ';base64,' + b64;
+
+    const uploadImageAvatar = await this.UserServices.imageUpload(
+      userId,
+      pathImage,
+      'avatar',
+    );
+
+    return response.status(200).json(uploadImageAvatar);
   }
 
+  @Post('upload/background/image')
+  @UseInterceptors(FileInterceptor('background'))
+  async uploadImageBackground(
+    @Req() request: Request,
+    @UploadedFile() background,
+    @Res() response: Response,
+  ) {
+    const { userId } = request.body;
+    const { mimetype } = request.file;
+
+    const b64 = Buffer.from(request.file.buffer).toString('base64');
+
+    const pathImage = 'data:' + mimetype + ';base64,' + b64;
+
+    const uploadImageBackground = await this.UserServices.imageUpload(
+      userId,
+      pathImage,
+      'background',
+    );
+
+    return response.status(200).json(uploadImageBackground);
+  }
   @Get('me/verify')
   async verifyToken(@Res() response: Response) {
     const { userId } = response.locals;
@@ -74,6 +120,17 @@ class UserController {
       sucess: true,
       data: userId,
     });
+  }
+
+  @Get('profile/:id')
+  async getProfileUser(@Param('id') id: string, @Res() response: Response) {
+    const user = await this.UserServices.findUser({ id });
+
+    if (!user) {
+      return response.status(400).json({ messge: 'User not found' });
+    }
+
+    return response.status(200).json(user);
   }
 }
 

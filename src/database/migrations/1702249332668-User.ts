@@ -38,6 +38,10 @@ export class User1702249332668 implements MigrationInterface {
             name: 'following',
             type: 'jsonb',
           },
+          {
+            name: 'backgroundd',
+            type: 'varchar',
+          },
         ],
       }),
     );

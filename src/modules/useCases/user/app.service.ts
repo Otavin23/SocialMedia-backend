@@ -35,7 +35,7 @@ class UserService {
     return find;
   }
 
-  async imageUpload(id: string, image: string) {
+  async imageUpload(id: string, image: string, inType: string) {
     const user = await this.bd_user.findOneBy({ id });
 
     const imageUpload = await cloudinary.uploader.upload(image, {
@@ -46,7 +46,7 @@ class UserService {
       allowed_formats: ['jpg', 'webp', 'png'],
     });
 
-    user.avatar = imageUpload.url;
+    user[inType] = imageUpload.url;
 
     await this.bd_user.save(user);
     return user;

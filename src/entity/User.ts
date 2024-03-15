@@ -10,6 +10,9 @@ class User {
   avatar?: string;
 
   @Column()
+  background?: string;
+
+  @Column()
   description?: string;
 
   @Column()
@@ -33,6 +36,8 @@ class User {
       this.description = 'Descricao padrao';
       this.avatar =
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHx93tNlXiGe201XM6AdAuQxZLiTMoVLSND48Q6_g2jDGRm1mc-F9h_-s_ug-dmt39bhY&usqp=CAU';
+      this.background =
+        'https://img.freepik.com/fotos-premium/uma-garota-japonesa-do-ensino-medio-primavera-alegre-perfil-seu-perfil-virado-de-lado_921410-20474.jpg';
     }
   }
 }
