@@ -5,10 +5,11 @@ import {
   RequestMethod,
 } from '@nestjs/common';
 import { UserModule } from './modules/useCases/user/app.module';
+import { ProfileModule } from './modules/useCases/profile/profile.module';
 import { EnsureAuthenticatedMiddleware } from './middlewares/ensureAuthenticated';
 
 @Module({
-  imports: [UserModule],
+  imports: [UserModule, ProfileModule],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
