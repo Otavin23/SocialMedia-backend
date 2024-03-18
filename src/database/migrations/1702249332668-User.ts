@@ -31,7 +31,15 @@ export class User1702249332668 implements MigrationInterface {
             type: 'varchar',
           },
           {
+            name: 'projects',
+            type: 'jsonb',
+          },
+          {
             name: 'followers',
+            type: 'jsonb',
+          },
+          {
+            name: 'invitations',
             type: 'jsonb',
           },
           {

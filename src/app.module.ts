@@ -7,9 +7,10 @@ import {
 import { UserModule } from './modules/useCases/user/app.module';
 import { ProfileModule } from './modules/useCases/profile/profile.module';
 import { EnsureAuthenticatedMiddleware } from './middlewares/ensureAuthenticated';
+import { NetworkModule } from './modules/useCases/network/network.module';
 
 @Module({
-  imports: [UserModule, ProfileModule],
+  imports: [UserModule, ProfileModule, NetworkModule],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

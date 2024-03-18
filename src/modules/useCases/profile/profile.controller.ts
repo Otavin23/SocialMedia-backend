@@ -17,6 +17,19 @@ class ProfileController {
 
     return response.status(200).json(EditDescription);
   }
+
+  @Post('/create/project')
+  async createProject(@Req() request: Request, @Res() response: Response) {
+    const { id, name, description } = request.body;
+
+    const projectList = await this.ProfileServices.createProject(
+      id,
+      name,
+      description,
+    );
+
+    return response.status(200).json(projectList);
+  }
 }
 
 export { ProfileController };

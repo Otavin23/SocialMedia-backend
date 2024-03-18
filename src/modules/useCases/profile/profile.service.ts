@@ -15,6 +15,21 @@ class ProfileService {
 
     return user;
   }
+
+  async createProject(id: string, name: string, description: string) {
+    const user = await this.bd_user.findOneBy({ id });
+
+    const projects = {
+      name,
+      description,
+      image: '',
+      craeted_at: new Date(),
+    };
+
+    user.projects.push(projects);
+
+    await this.bd_user.save(user);
+  }
 }
 
 export { ProfileService };

@@ -1,5 +1,7 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 import { v4 as uuid4 } from 'uuid';
+import { IProjects } from './@types/projects';
+import { IInvitations } from './@types/invitations';
 
 @Entity('user')
 class User {
@@ -25,10 +27,18 @@ class User {
   password: string;
 
   @Column({ type: 'jsonb', default: [] })
-  followers: [];
+  projects: IProjects[];
+
+  @Column({ type: 'jsonb', default: [] })
+  followers: any[];
+
+  @Column({ type: 'jsonb', default: [] })
+  invitations: any[];
 
   @Column({ type: 'jsonb', default: [] })
   following: [];
+
+  craeted_at: Date;
 
   constructor() {
     if (!this.id && !this.avatar && !this.description) {
