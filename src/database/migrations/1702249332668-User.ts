@@ -31,6 +31,18 @@ export class User1702249332668 implements MigrationInterface {
             type: 'varchar',
           },
           {
+            name: 'country',
+            type: 'varchar',
+          },
+          {
+            name: 'subTitle',
+            type: 'varchar',
+          },
+          {
+            name: 'city',
+            type: 'varchar',
+          },
+          {
             name: 'projects',
             type: 'jsonb',
           },
@@ -43,11 +55,19 @@ export class User1702249332668 implements MigrationInterface {
             type: 'jsonb',
           },
           {
+            name: 'publication',
+            type: 'jsonb',
+          },
+          {
+            name: 'experiences',
+            type: 'jsonb',
+          },
+          {
             name: 'following',
             type: 'jsonb',
           },
           {
-            name: 'backgroundd',
+            name: 'background',
             type: 'varchar',
           },
         ],
