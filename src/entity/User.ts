@@ -1,44 +1,43 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import { v4 as uuid4 } from 'uuid';
-import { IProjects } from './@types/projects';
-import { IPublication } from './@types/publication';
 import { IExperience } from './@types/experience';
-// import { IInvitations } from './@types/invitations';
+import { Projects } from './Project';
+import { Publications } from './Publications';
 
 @Entity('user')
 class User {
-  @PrimaryColumn()
+  @PrimaryColumn({ default: '' })
   id?: string;
 
-  @Column()
+  @Column({ nullable: true })
   avatar?: string;
 
-  @Column()
+  @Column({ nullable: true })
   background?: string;
 
-  @Column()
+  @Column({ nullable: true })
   description?: string;
 
-  @Column()
+  @Column({ nullable: true })
   name: string;
 
-  @Column()
+  @Column({ nullable: true })
   email: string;
 
-  @Column()
+  @Column({ nullable: true })
   country?: string;
 
-  @Column()
+  @Column({ nullable: true })
   subTitle?: string;
 
-  @Column()
+  @Column({ nullable: true })
   city?: string;
 
-  @Column()
+  @Column({ nullable: true })
   password: string;
 
-  @Column({ type: 'jsonb', default: [] })
-  projects: IProjects[];
+  @OneToMany(() => Projects, (project) => project.user)
+  projects: Projects[];
 
   @Column({ type: 'jsonb', default: [] })
   followers: any[];
@@ -46,8 +45,8 @@ class User {
   @Column({ type: 'jsonb', default: [] })
   invitations: any[];
 
-  @Column({ type: 'jsonb', default: [] })
-  publication: IPublication[];
+  @OneToMany(() => Publications, (publication) => publication.user)
+  publication: Publications[];
 
   @Column({ type: 'jsonb', default: [] })
   experiences: IExperience[];
@@ -56,6 +55,8 @@ class User {
   following: [];
 
   craeted_at: Date;
+
+  userFind: Projects;
 
   constructor() {
     if (!this.id && !this.avatar && !this.description) {

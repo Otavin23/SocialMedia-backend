@@ -2,9 +2,9 @@ import { DataSource } from 'typeorm';
 
 import { config } from 'dotenv';
 
-import { User1702249332668 } from './migrations/1702249332668-User';
-
 import { User } from '../entity/User';
+import { Projects } from '../entity/Project';
+import { Publications } from '../entity/Publications';
 
 config();
 const AppDataSource = new DataSource({
@@ -16,8 +16,8 @@ const AppDataSource = new DataSource({
   database: process.env.DB_NAME,
   synchronize: true,
   logging: false,
-  entities: [User],
-  migrations: [User1702249332668],
+  entities: [User, Projects, Publications],
+  migrations: ['src/migration/**/*{.js,.ts}'],
   subscribers: [],
 });
 

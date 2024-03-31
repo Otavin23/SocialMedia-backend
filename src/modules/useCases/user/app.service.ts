@@ -30,9 +30,20 @@ class UserService {
   }
 
   async findUser(user: IFInd) {
-    const find = await this.bd_user.findOneBy(user);
+    const find = await this.bd_user.find({
+      where: user,
+      relations: {
+        projects: {
+          user: true,
+        },
 
-    return find;
+        publication: {
+          user: true,
+        },
+      },
+    });
+
+    return find[0];
   }
 
   async imageUpload(id: string, image: string, inType: string) {

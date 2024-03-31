@@ -6,21 +6,22 @@ import { Request, Response } from 'express';
 class ProfileController {
   constructor(private ProfileServices: ProfileService) {}
 
-  @Post('/description')
-  async descriptionEdit(@Req() request: Request, @Res() response: Response) {
-    const { id, description } = request.body;
+  // @Post('/description')
+  // async descriptionEdit(@Req() request: Request, @Res() response: Response) {
+  //   const { id, description } = request.body;
 
-    const EditDescription = await this.ProfileServices.descriptionEdit(
-      id,
-      description,
-    );
+  //   const EditDescription = await this.ProfileServices.descriptionEdit(
+  //     id,
+  //     description,
+  //   );
 
-    return response.status(200).json(EditDescription);
-  }
-
+  //   return response.status(200).json(EditDescription);
+  // }
   @Post('/create/project')
   async createProject(@Req() request: Request, @Res() response: Response) {
     const { id, name, description } = request.body;
+
+    console.log(name, id);
 
     const projectList = await this.ProfileServices.createProject(
       id,

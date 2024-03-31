@@ -10,6 +10,7 @@ import { EnsureAuthenticatedMiddleware } from './middlewares/ensureAuthenticated
 import { NetworkModule } from './modules/useCases/network/network.module';
 import { PublicationModule } from './modules/useCases/publication/publication.module';
 import { ExperienceModule } from './modules/useCases/experience/experience.module';
+import { postsModule } from './modules/useCases/posts/posts.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { ExperienceModule } from './modules/useCases/experience/experience.modul
     NetworkModule,
     PublicationModule,
     ExperienceModule,
+    postsModule,
   ],
 })
 export class AppModule implements NestModule {
