@@ -3,9 +3,12 @@ import {
   Post,
   Req,
   Res,
+  Delete,
   UploadedFile,
   UseInterceptors,
+  Param,
 } from '@nestjs/common';
+
 import { PublicationService } from './publication.service';
 import { Request, Response } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -35,6 +38,21 @@ class PublicationsController {
     );
 
     return response.status(200).json(createPublication);
+  }
+
+  @Delete('delete/:id')
+  async deletePublication(@Param('id') id: string, @Res() response: Response) {
+    console.log(id);
+    const deleteUser = await this.PublicationServices.deletePublication(id);
+
+    return response.status(200).json(deleteUser);
+  }
+
+  @Delete('delete/message/:id')
+  async deleteMessage(@Param('id') id: string, @Res() response: Response) {
+    const deleteMessage = await this.PublicationServices.deleteMessage(id);
+
+    return response.status(200).json(deleteMessage);
   }
 }
 export { PublicationsController };

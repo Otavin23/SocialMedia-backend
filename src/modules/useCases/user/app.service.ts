@@ -39,6 +39,7 @@ class UserService {
 
         publication: {
           user: true,
+          comments: true,
         },
       },
     });

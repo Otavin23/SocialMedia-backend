@@ -3,15 +3,15 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
 } from 'typeorm';
-// import { v4 as uuid4 } from 'uuid';
+import { v4 as uuid4 } from 'uuid';
 import { User } from './User';
 
 @Entity('projects')
 class Projects {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryColumn({ default: uuid4() })
+  id?: string;
 
   @Column({ nullable: true })
   name: string;
@@ -20,7 +20,7 @@ class Projects {
   description: string;
 
   @Column({ type: 'jsonb', default: [] })
-  comments?: any[];
+  comments?: Comment[];
 
   @Column({ nullable: true })
   like?: string;
@@ -38,7 +38,8 @@ class Projects {
   created_at: Date;
 
   constructor() {
-    if (this.like && this.heart && this.media) {
+    if (!this.id && !this.like && this.heart && this.media) {
+      this.id = uuid4();
       this.like = '0';
       this.heart = '0';
       this.media = 'hello';

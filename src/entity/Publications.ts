@@ -2,11 +2,14 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   PrimaryColumn,
 } from 'typeorm';
 import { User } from './User';
 import { v4 as uuid4 } from 'uuid';
+import { Comments } from './Comments';
 
 @Entity('publication')
 class Publications {
@@ -16,8 +19,9 @@ class Publications {
   @Column()
   description: string;
 
-  @Column({ type: 'jsonb', default: [] })
-  comments: any[];
+  @ManyToMany(() => Comments)
+  @JoinTable()
+  comments?: Comments[];
 
   @Column()
   like: number;

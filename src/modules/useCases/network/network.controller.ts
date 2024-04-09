@@ -1,7 +1,6 @@
 import { Controller, Post, Req, Res, Get, Param } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { NetworkService } from './network.service';
-import { request } from 'http';
 
 @Controller('network')
 class NetworkProfile {
@@ -39,6 +38,13 @@ class NetworkProfile {
     const inviteAccept = await this.NetworkServices.declineAccept(user__id, id);
 
     return response.status(200).json(inviteAccept);
+  }
+
+  @Get('list')
+  async inviteLists(@Res() response: Response) {
+    const listPeoples = await this.NetworkServices.networkLists();
+
+    return response.status(200).json(listPeoples);
   }
 }
 

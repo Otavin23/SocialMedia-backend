@@ -49,6 +49,12 @@ class NetworkService {
 
     return user;
   }
+
+  async networkLists() {
+    const user = await this.bd_user.find();
+
+    return user;
+  }
 }
 
 export { NetworkService };

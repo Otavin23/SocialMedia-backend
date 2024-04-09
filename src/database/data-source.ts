@@ -5,6 +5,8 @@ import { config } from 'dotenv';
 import { User } from '../entity/User';
 import { Projects } from '../entity/Project';
 import { Publications } from '../entity/Publications';
+import { Comments } from '../entity/Comments';
+// import { subComment } from '../entity/subComments';
 
 config();
 const AppDataSource = new DataSource({
@@ -16,7 +18,7 @@ const AppDataSource = new DataSource({
   database: process.env.DB_NAME,
   synchronize: true,
   logging: false,
-  entities: [User, Projects, Publications],
+  entities: [User, Projects, Publications, Comments],
   migrations: ['src/migration/**/*{.js,.ts}'],
   subscribers: [],
 });

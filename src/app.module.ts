@@ -11,6 +11,7 @@ import { NetworkModule } from './modules/useCases/network/network.module';
 import { PublicationModule } from './modules/useCases/publication/publication.module';
 import { ExperienceModule } from './modules/useCases/experience/experience.module';
 import { postsModule } from './modules/useCases/posts/posts.module';
+import { FeedModule } from './modules/useCases/feed/feed.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { postsModule } from './modules/useCases/posts/posts.module';
     PublicationModule,
     ExperienceModule,
     postsModule,
+    FeedModule,
   ],
 })
 export class AppModule implements NestModule {

@@ -3,11 +3,13 @@ import { AppDataSource } from 'src/database/data-source';
 import { User } from 'src/entity/User';
 import { v2 as cloudinary } from 'cloudinary';
 import { Publications } from 'src/entity/Publications';
+import { Comments } from 'src/entity/Comments';
 
 @Injectable()
 class PublicationService {
   private bd_user = AppDataSource.getRepository(User);
   private bd__publication = AppDataSource.getRepository(Publications);
+  private bd__comments = AppDataSource.getRepository(Comments);
 
   async createPublication(description: string, id: string, pathName?: string) {
     const user = await this.bd_user.findOne({
@@ -25,8 +27,6 @@ class PublicationService {
         format: 'svg',
         allowed_formats: ['jpg', 'webp', 'png', 'mp4', 'mkv'],
       });
-
-      console.log(imageUpload);
 
       uploadImage = imageUpload.url;
     }
@@ -46,6 +46,18 @@ class PublicationService {
 
     return user;
   }
+
+  async deletePublication(id: string) {
+    const deleteUser = await this.bd__publication.delete({ id });
+
+    return deleteUser;
+  }
+
+  async deleteMessage(id: string) {
+    this.bd__comments.delete({ id });
+  }
+
+  async addHeart() {}
 }
 
 export { PublicationService };
