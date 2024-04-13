@@ -19,17 +19,8 @@ class Projects {
   @Column({ nullable: true })
   description: string;
 
-  @Column({ type: 'jsonb', default: [] })
-  comments?: Comment[];
-
   @Column({ nullable: true })
-  like?: string;
-
-  @Column({ nullable: true })
-  heart?: string;
-
-  @Column({ nullable: true })
-  media?: string;
+  image: string;
 
   @ManyToOne(() => User, (user) => user.projects, { cascade: true })
   user: User;
@@ -38,11 +29,8 @@ class Projects {
   created_at: Date;
 
   constructor() {
-    if (!this.id && !this.like && this.heart && this.media) {
+    if (!this.id) {
       this.id = uuid4();
-      this.like = '0';
-      this.heart = '0';
-      this.media = 'hello';
     }
   }
 }

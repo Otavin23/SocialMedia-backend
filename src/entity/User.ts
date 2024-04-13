@@ -3,6 +3,7 @@ import { v4 as uuid4 } from 'uuid';
 import { IExperience } from './@types/experience';
 import { Projects } from './Project';
 import { Publications } from './Publications';
+import { NotificationEntity } from './notification';
 
 @Entity('user')
 class User {
@@ -35,6 +36,9 @@ class User {
 
   @Column({ nullable: true })
   password: string;
+
+  @OneToMany(() => NotificationEntity, (notification) => notification.user)
+  notification: NotificationEntity[];
 
   @OneToMany(() => Projects, (project) => project.user)
   projects: Projects[];

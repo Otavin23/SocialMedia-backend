@@ -5,6 +5,22 @@ import { AppModule } from './app.module';
 import { AppDataSource } from './database/data-source';
 
 import { v2 as cloudinary } from 'cloudinary';
+import { Server } from 'socket.io';
+
+const socketIo = new Server({
+  cors: {
+    origin: 'http://localhost:3000',
+  },
+});
+
+socketIo.on('connection', (socket) => {
+  socket.on('newEvent', (event) => {
+    console.log(event);
+    socket.emit('parafront', 'hello');
+  });
+
+  socket.on('disconnect', () => socket.disconnect());
+});
 
 cloudinary.config({
   cloud_name: 'dpputbvzd',

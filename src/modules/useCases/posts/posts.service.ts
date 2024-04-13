@@ -4,8 +4,6 @@ import { Comments } from 'src/entity/Comments';
 import { Projects } from 'src/entity/Project';
 import { Publications } from 'src/entity/Publications';
 import { User } from 'src/entity/User';
-// import { subComment } from 'src/entity/subComments';
-// import { v4 as uuid4 } from 'uuid';
 
 @Injectable()
 class postsService {
@@ -22,19 +20,12 @@ class postsService {
       },
       relations: {
         user: true,
+        heart: true,
+        comments: true,
       },
     });
 
-    const projects = await this.bd__projects.find({
-      order: {
-        created_at: 'DESC',
-      },
-      relations: {
-        user: true,
-      },
-    });
-
-    return [...publication, ...projects];
+    return publication;
   }
 
   async commentsAdd(id: string, description: string, user__id: string) {
@@ -63,7 +54,10 @@ class postsService {
       where: { id },
       // order: { publication: { comments: 'DESC' } },
       order: { publication: { comments: { created_at: 'DESC' } } },
-      relations: { publication: { user: true, comments: true } },
+      relations: {
+        publication: { user: true, comments: true, heart: true },
+        projects: { user: true },
+      },
     });
 
     const user = await this.bd__user.findOneBy({ id });

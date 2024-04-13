@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { AppDataSource } from 'src/database/data-source';
 import { Projects } from 'src/entity/Project';
 import { User } from 'src/entity/User';
+import { v2 as cloudinary } from 'cloudinary';
 
 @Injectable()
 class ProfileService {
@@ -15,7 +16,12 @@ class ProfileService {
   //   // return user;
   // }
 
-  async createProject(id: string, name: string, description: string) {
+  async createProject(
+    id: string,
+    name: string,
+    description: string,
+    pathName: any,
+  ) {
     const userFind = await this.bd_user2.findOne({
       where: {
         id,
@@ -25,13 +31,24 @@ class ProfileService {
       },
     });
 
+    let uploadImage = undefined;
+
+    if (pathName) {
+      const imageUpload = await cloudinary.uploader.upload(pathName, {
+        public_id: 'olimpic',
+        folder: 'avatars',
+        resource_type: 'image',
+        format: 'svg',
+        allowed_formats: ['jpg', 'webp', 'png', 'mp4', 'mkv'],
+      });
+
+      uploadImage = imageUpload.url;
+    }
+
     const projeto = this.bd_user.create({
       description,
-      like: '0',
-      comments: [],
-      heart: '0',
-      user: userFind,
-      media: '0',
+      name,
+      image: uploadImage ?? '',
     });
 
     userFind.projects.push(projeto);
@@ -40,6 +57,18 @@ class ProfileService {
     await this.bd_user2.save(userFind);
 
     return userFind;
+  }
+
+  async removeProject(id: string) {
+    await this.bd_user.delete({ id });
+  }
+
+  async listsProjects(id: string) {
+    const projects = await this.bd_user2.findOne({
+      where: { id },
+      relations: { projects: true },
+    });
+    return projects.projects;
   }
 }
 

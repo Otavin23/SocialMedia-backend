@@ -54,5 +54,35 @@ class PublicationsController {
 
     return response.status(200).json(deleteMessage);
   }
+
+  @Post('addHeart')
+  async addHeart(@Req() request: Request, @Res() response: Response) {
+    try {
+      const { id__publication, id__user } = request.body;
+
+      const addHeart = await this.PublicationServices.addHeart(
+        id__publication,
+        id__user,
+      );
+
+      return response.status(200).json(addHeart);
+    } catch (error) {
+      return response.status(400).json({
+        error: error,
+      });
+    }
+  }
+
+  @Post('removeHeart')
+  async removeHeard(@Req() request: Request, @Res() response: Response) {
+    const { id__publication, id__user } = request.body;
+
+    const removeHeart = await this.PublicationServices.removeHeart(
+      id__publication,
+      id__user,
+    );
+
+    return response.status(200).json(removeHeart);
+  }
 }
 export { PublicationsController };

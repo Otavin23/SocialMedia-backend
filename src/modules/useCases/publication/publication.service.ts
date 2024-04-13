@@ -4,12 +4,14 @@ import { User } from 'src/entity/User';
 import { v2 as cloudinary } from 'cloudinary';
 import { Publications } from 'src/entity/Publications';
 import { Comments } from 'src/entity/Comments';
+import { IHeart } from 'src/entity/heart';
 
 @Injectable()
 class PublicationService {
   private bd_user = AppDataSource.getRepository(User);
   private bd__publication = AppDataSource.getRepository(Publications);
   private bd__comments = AppDataSource.getRepository(Comments);
+  private bd__hearts = AppDataSource.getRepository(IHeart);
 
   async createPublication(description: string, id: string, pathName?: string) {
     const user = await this.bd_user.findOne({
@@ -34,7 +36,6 @@ class PublicationService {
     const publication = this.bd__publication.create({
       description,
       comments: [],
-      heart: 0,
       like: 0,
       image: uploadImage ?? '',
     });
@@ -57,7 +58,50 @@ class PublicationService {
     this.bd__comments.delete({ id });
   }
 
-  async addHeart() {}
+  async addHeart(id__publication: string, id__user: string) {
+    const publication = await this.bd__publication.findOne({
+      where: {
+        id: id__publication,
+      },
+      relations: { heart: true },
+    });
+
+    const findHeart = publication.heart.find(
+      (heart) => heart.user.id === id__user,
+    );
+
+    if (findHeart) throw new Error();
+
+    const user = await this.bd_user.findOneBy({ id: id__user });
+
+    const heartUser = this.bd__hearts.create({
+      user: {
+        id: user.id,
+        avatar: user.avatar,
+        description: user.description,
+        name: user.name,
+      },
+    });
+
+    publication.heart.push(heartUser);
+    await this.bd__hearts.save(heartUser);
+    await this.bd__publication.save(publication);
+
+    return publication;
+  }
+
+  async removeHeart(id__publication: string, id__user: string) {
+    const hearts = await this.bd__publication.findOne({
+      where: { id: id__publication },
+      relations: { heart: true },
+    });
+
+    const findHeartsId = hearts.heart.find(
+      (heart) => heart.user.id === id__user,
+    );
+
+    await this.bd__hearts.delete({ id: findHeartsId.id });
+  }
 }
 
 export { PublicationService };

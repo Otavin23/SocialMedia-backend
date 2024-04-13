@@ -6,7 +6,8 @@ import { User } from '../entity/User';
 import { Projects } from '../entity/Project';
 import { Publications } from '../entity/Publications';
 import { Comments } from '../entity/Comments';
-// import { subComment } from '../entity/subComments';
+import { IHeart } from '../entity/heart';
+import { NotificationEntity } from '../entity/notification';
 
 config();
 const AppDataSource = new DataSource({
@@ -18,7 +19,14 @@ const AppDataSource = new DataSource({
   database: process.env.DB_NAME,
   synchronize: true,
   logging: false,
-  entities: [User, Projects, Publications, Comments],
+  entities: [
+    User,
+    Projects,
+    Publications,
+    Comments,
+    IHeart,
+    NotificationEntity,
+  ],
   migrations: ['src/migration/**/*{.js,.ts}'],
   subscribers: [],
 });

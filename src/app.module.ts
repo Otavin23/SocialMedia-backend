@@ -12,6 +12,8 @@ import { PublicationModule } from './modules/useCases/publication/publication.mo
 import { ExperienceModule } from './modules/useCases/experience/experience.module';
 import { postsModule } from './modules/useCases/posts/posts.module';
 import { FeedModule } from './modules/useCases/feed/feed.module';
+import { NotificationService } from './notification/notification.service';
+import { SocketModule } from './notification/notification.module';
 
 @Module({
   imports: [
@@ -22,7 +24,9 @@ import { FeedModule } from './modules/useCases/feed/feed.module';
     ExperienceModule,
     postsModule,
     FeedModule,
+    SocketModule,
   ],
+  providers: [NotificationService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

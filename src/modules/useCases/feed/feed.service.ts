@@ -15,11 +15,13 @@ class FeedServices {
       relations: {
         user: true,
         comments: true,
+        heart: true,
       },
     });
 
     const projects = await this.bd__projects.findOne({
       where: { id },
+      order: { created_at: 'DESC' },
       relations: { user: true },
     });
 

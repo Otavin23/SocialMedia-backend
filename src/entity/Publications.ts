@@ -10,6 +10,7 @@ import {
 import { User } from './User';
 import { v4 as uuid4 } from 'uuid';
 import { Comments } from './Comments';
+import { IHeart } from './heart';
 
 @Entity('publication')
 class Publications {
@@ -26,8 +27,9 @@ class Publications {
   @Column()
   like: number;
 
-  @Column()
-  heart: number;
+  @ManyToMany(() => IHeart)
+  @JoinTable()
+  heart?: IHeart[];
 
   @Column()
   image: string;
