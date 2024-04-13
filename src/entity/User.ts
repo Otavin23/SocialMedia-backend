@@ -4,6 +4,7 @@ import { IExperience } from './@types/experience';
 import { Projects } from './Project';
 import { Publications } from './Publications';
 import { NotificationEntity } from './notification';
+import { Chat } from './message';
 
 @Entity('user')
 class User {
@@ -36,6 +37,9 @@ class User {
 
   @Column({ nullable: true })
   password: string;
+
+  @OneToMany(() => Chat, (chat) => chat.FromId)
+  chat: Chat[];
 
   @OneToMany(() => NotificationEntity, (notification) => notification.user)
   notification: NotificationEntity[];

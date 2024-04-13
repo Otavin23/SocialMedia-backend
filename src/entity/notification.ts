@@ -16,6 +16,16 @@ class NotificationEntity {
   @Column({ nullable: true })
   read?: boolean;
 
+  @Column({ type: 'jsonb', default: [] })
+  users: {
+    id: string;
+    avatar: string;
+    name: string;
+  };
+
+  @Column({ nullable: true })
+  enumType: number;
+
   @ManyToOne(() => User, (user) => user.notification, { cascade: true })
   user: User;
 

@@ -8,6 +8,7 @@ import { Publications } from '../entity/Publications';
 import { Comments } from '../entity/Comments';
 import { IHeart } from '../entity/heart';
 import { NotificationEntity } from '../entity/notification';
+import { Chat } from '../entity/message';
 
 config();
 const AppDataSource = new DataSource({
@@ -26,6 +27,7 @@ const AppDataSource = new DataSource({
     Comments,
     IHeart,
     NotificationEntity,
+    Chat,
   ],
   migrations: ['src/migration/**/*{.js,.ts}'],
   subscribers: [],

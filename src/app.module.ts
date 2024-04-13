@@ -12,8 +12,9 @@ import { PublicationModule } from './modules/useCases/publication/publication.mo
 import { ExperienceModule } from './modules/useCases/experience/experience.module';
 import { postsModule } from './modules/useCases/posts/posts.module';
 import { FeedModule } from './modules/useCases/feed/feed.module';
-import { NotificationService } from './notification/notification.service';
-import { SocketModule } from './notification/notification.module';
+import { SocketModule } from './modules/useCases/notification/notification.module';
+import { AppService } from './message/message.service';
+import { SocketModuleMessage } from './message/message.module';
 
 @Module({
   imports: [
@@ -25,8 +26,9 @@ import { SocketModule } from './notification/notification.module';
     postsModule,
     FeedModule,
     SocketModule,
+    SocketModuleMessage,
   ],
-  providers: [NotificationService],
+  providers: [AppService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
