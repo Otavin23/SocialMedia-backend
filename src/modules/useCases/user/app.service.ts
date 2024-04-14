@@ -41,6 +41,10 @@ class UserService {
           user: true,
           comments: true,
         },
+
+        messagesChat: {
+          FromId: true,
+        },
       },
     });
 

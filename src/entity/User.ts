@@ -39,7 +39,7 @@ class User {
   password: string;
 
   @OneToMany(() => Chat, (chat) => chat.FromId)
-  chat: Chat[];
+  messagesChat: Chat[];
 
   @OneToMany(() => NotificationEntity, (notification) => notification.user)
   notification: NotificationEntity[];

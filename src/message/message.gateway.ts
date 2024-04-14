@@ -1,4 +1,5 @@
 import {
+  MessageBody,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
@@ -38,11 +39,6 @@ export class MessageGateway implements OnModuleInit {
   onModuleInit() {
     this.server.on('connection', async (socket) => {
       this.socketMap.set('socketId', socket.id);
-      const { id }: any = socket.handshake.query;
-
-      const chat = await this.MessageServices.listMessage(id);
-
-      socket.emit('description', { data: chat });
 
       socket.on('disconnect', () => {
         this.socketMap.delete('socketId');
@@ -50,48 +46,54 @@ export class MessageGateway implements OnModuleInit {
     });
   }
 
-  async emitMessage(id: string) {
-    const socketMeta = this.socketMap.get('socketId');
-
-    const cardNotification = await this.MessageServices.createMessage(id);
-
-    this.server.to(socketMeta).emit('message', cardNotification);
-
-    return cardNotification;
+  @SubscribeMessage('getMessage')
+  async getMessages(@MessageBody() id: string) {
+    const getChat = await this.MessageServices.getMessage(id);
+    this.server.emit('getMessages', { data: getChat });
+    return getChat;
   }
 
-  async emmitMessageDefault(id, id_chat) {
-    const socketMeta = this.socketMap.get('socketId');
-
-    const cardNotification = await this.MessageServices.sendMessage(
-      id,
-      id_chat,
+  @SubscribeMessage('addMessage')
+  async handleMessage(
+    @MessageBody() body: { id: string; chat__id: string; text: string },
+  ) {
+    const chat = await this.MessageServices.sendMessage(
+      body.id,
+      body.chat__id,
+      body.text,
     );
 
-    this.server.to(socketMeta).emit('sendMessage', cardNotification);
+    this.server.emit('addMessage', { data: chat });
 
-    return cardNotification;
+    return chat;
   }
 
-  async getMessages(id: string) {
-    const listMessages = await this.MessageServices.listMessage(id);
+  async listMessages(id: string) {
+    const listMessages = await this.MessageServices.listMessages(id);
+
     return listMessages;
   }
 
-  // async listNotification(id: string) {
-  //   // const socketMeta = this.socketMap.get('socketId');
+  async getMessage(id: string) {
+    const getMessage = await this.MessageServices.getMessage(id);
 
-  //   const listNotification = await this.MessageServices.listNotification(id);
-
-  //   // if (!socketMeta) console.log('user is not online at the moment!');
-
-  //   // this.server.to(socketMeta).emit('listNotification', listNotification);
-
-  //   return listNotification;
-  // }
-
-  @SubscribeMessage('currentUsers')
-  async currentUsers(client: Socket) {
-    client.emit('currentUsers', Array.from(this.socketMap.values()));
+    return getMessage;
   }
+
+  // // async listNotification(id: string) {
+  // //   // const socketMeta = this.socketMap.get('socketId');
+
+  // //   const listNotification = await this.MessageServices.listNotification(id);
+
+  // //   // if (!socketMeta) console.log('user is not online at the moment!');
+
+  // //   // this.server.to(socketMeta).emit('listNotification', listNotification);
+
+  // //   return listNotification;
+  // // }
+
+  // @SubscribeMessage('currentUsers')
+  // async currentUsers(client: Socket) {
+  //   client.emit('currentUsers', Array.from(this.socketMap.values()));
+  // }
 }
