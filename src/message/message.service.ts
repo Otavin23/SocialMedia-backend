@@ -8,7 +8,7 @@ export class AppService {
   private bd__chat = AppDataSource.getRepository(Chat);
   private bd__user = AppDataSource.getRepository(User);
 
-  async createMessage(id: string, text) {
+  async createMessage(id: string, text: string) {
     const user = await this.bd__user.findOne({
       where: { id },
       relations: { messagesChat: { FromId: true } },
@@ -38,22 +38,12 @@ export class AppService {
       relations: { FromId: true },
     });
 
-    if (messageUser.FromId.id !== id) {
-      messageUser.content.push({
-        type: 'receive',
-        value: text,
-      });
-      await this.bd__chat.save(messageUser);
-    }
+    messageUser.content.push({
+      text,
+      id,
+    });
 
-    if (messageUser.FromId.id === id) {
-      messageUser.content.push({
-        type: 'send',
-        value: text,
-      });
-      await this.bd__chat.save(messageUser);
-    }
-
+    await this.bd__chat.save(messageUser);
     return messageUser;
   }
 
@@ -76,12 +66,15 @@ export class AppService {
       relations: { messagesChat: { FromId: true } },
     });
 
-    return user.messagesChat;
+    return user.followers;
   }
 
   async getMessage(id: string) {
     const chat = await this.bd__chat.findOne({
-      where: { MessageId: id },
+      where: {
+        MessageId: id,
+      },
+
       relations: { FromId: true },
     });
 

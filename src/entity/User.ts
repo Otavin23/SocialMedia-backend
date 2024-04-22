@@ -1,4 +1,10 @@
-import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryColumn,
+} from 'typeorm';
 import { v4 as uuid4 } from 'uuid';
 import { IExperience } from './@types/experience';
 import { Projects } from './Project';
@@ -8,7 +14,7 @@ import { Chat } from './message';
 
 @Entity('user')
 class User {
-  @PrimaryColumn({ default: '' })
+  @PrimaryColumn({ default: uuid4() })
   id?: string;
 
   @Column({ nullable: true })
@@ -59,12 +65,8 @@ class User {
   @Column({ type: 'jsonb', default: [] })
   experiences: IExperience[];
 
-  @Column({ type: 'jsonb', default: [] })
-  following: [];
-
+  @CreateDateColumn()
   craeted_at: Date;
-
-  userFind: Projects;
 
   constructor() {
     if (!this.id && !this.avatar && !this.description) {

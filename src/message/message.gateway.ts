@@ -40,6 +40,8 @@ export class MessageGateway implements OnModuleInit {
     this.server.on('connection', async (socket) => {
       this.socketMap.set('socketId', socket.id);
 
+      // socket.emit('getMessage', { data: 'hello world' });
+
       socket.on('disconnect', () => {
         this.socketMap.delete('socketId');
       });
@@ -47,10 +49,14 @@ export class MessageGateway implements OnModuleInit {
   }
 
   @SubscribeMessage('getMessage')
-  async getMessages(@MessageBody() id: string) {
-    const getChat = await this.MessageServices.getMessage(id);
-    this.server.emit('getMessages', { data: getChat });
-    return getChat;
+  async handleEvent(@MessageBody('id') id: string): Promise<string> {
+    const listChatUnic = await this.MessageServices.getMessage(id);
+
+    this.server
+      .to(this.socketMap.get('socketId'))
+      .emit('getMessage', { data: listChatUnic });
+
+    return id;
   }
 
   @SubscribeMessage('addMessage')
@@ -70,7 +76,6 @@ export class MessageGateway implements OnModuleInit {
 
   async listMessages(id: string) {
     const listMessages = await this.MessageServices.listMessages(id);
-
     return listMessages;
   }
 

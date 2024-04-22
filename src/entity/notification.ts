@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryColumn,
+} from 'typeorm';
 import { User } from './User';
 import { v4 as uuid4 } from 'uuid';
 
@@ -8,13 +14,16 @@ class NotificationEntity {
   id?: string;
 
   @Column({ nullable: true })
-  title: string;
+  publication: string;
 
   @Column({ nullable: true })
-  description: string;
+  text: string;
 
   @Column({ nullable: true })
   read?: boolean;
+
+  @Column({ nullable: true })
+  imagePublication: string;
 
   @Column({ type: 'jsonb', default: [] })
   users: {
@@ -28,6 +37,9 @@ class NotificationEntity {
 
   @ManyToOne(() => User, (user) => user.notification, { cascade: true })
   user: User;
+
+  @CreateDateColumn()
+  created_at: Date;
 
   constructor() {
     if (!this.id && !this.read) {

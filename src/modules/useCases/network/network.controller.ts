@@ -8,14 +8,21 @@ class NetworkProfile {
 
   @Post('invite')
   async inviteNetwork(@Req() request: Request, @Res() response: Response) {
-    const { user__id, id } = request.body;
+    try {
+      const { user__id, id } = request.body;
 
-    const userNetwork = await this.NetworkServices.networkInvite(user__id, id);
+      const userNetwork = await this.NetworkServices.networkInvite(
+        user__id,
+        id,
+      );
 
-    return response.status(200).json(userNetwork);
+      return response.status(200).json(userNetwork);
+    } catch (error) {
+      return response.status(400).json({ error: error.message });
+    }
   }
 
-  @Get('list/invite/:id')
+  @Get('/list/invite/:id')
   async listInvites(@Param('id') id: string, @Res() response: Response) {
     const listInvite = await this.NetworkServices.NetworkListInvites(id);
 
@@ -40,11 +47,19 @@ class NetworkProfile {
     return response.status(200).json(inviteAccept);
   }
 
-  @Get('list')
+  @Get('/list')
   async inviteLists(@Res() response: Response) {
-    const listPeoples = await this.NetworkServices.networkLists();
+    const { userId } = response.locals;
+    const listPeoples = await this.NetworkServices.networkLists(userId.id);
 
     return response.status(200).json(listPeoples);
+  }
+
+  @Get('/list/mark/:id')
+  async listInvitesMarks(@Param('id') id: string, @Res() response: Response) {
+    const listMark = await this.NetworkServices.listMarks(id);
+
+    return response.status(200).json(listMark);
   }
 }
 

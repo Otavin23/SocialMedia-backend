@@ -9,8 +9,8 @@ import { Comments } from '../entity/Comments';
 import { IHeart } from '../entity/heart';
 import { NotificationEntity } from '../entity/notification';
 import { Chat } from '../entity/message';
-
 config();
+
 const AppDataSource = new DataSource({
   type: 'postgres',
   host: process.env.DB_HOST,
