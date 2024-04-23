@@ -68,8 +68,11 @@ class User {
   @CreateDateColumn()
   craeted_at: Date;
 
+  @Column({ nullable: true })
+  blog?: string;
+
   constructor() {
-    if (!this.id && !this.avatar && !this.description) {
+    if (!this.id && !this.avatar && !this.description && !this.blog) {
       this.id = uuid4();
       this.description =
         'Olá! Bem-vindo(a) ao meu perfil. Aqui você encontrará informações sobre mim e minhas interesses. Sinta-se à vontade para explorar e conhecer um pouco mais sobre quem eu sou e o que me motiva. Se tiver alguma dúvida ou quiser iniciar uma conversa, não hesite em me contatar. Estou sempre aberto(a) a novas conexões e experiências. Obrigado(a) por visitar meu perfil!';
@@ -80,6 +83,7 @@ class User {
       this.city = '';
       this.country = '';
       this.subTitle = '';
+      this.blog = '';
     }
   }
 }

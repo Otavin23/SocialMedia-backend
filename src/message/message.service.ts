@@ -42,7 +42,6 @@ export class AppService {
       text,
       id,
     });
-
     await this.bd__chat.save(messageUser);
     return messageUser;
   }
@@ -55,10 +54,6 @@ export class AppService {
 
     return chat;
   }
-
-  // async getMessages(): Promise<Chat[]> {
-  //   return await this.chatRepository.find();
-  // }
 
   async listMessages(id: string) {
     const user = await this.bd__user.findOne({
