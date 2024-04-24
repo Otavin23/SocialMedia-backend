@@ -24,8 +24,7 @@ export interface socketMetaPayload {
   crossOriginIsolated: true,
 
   cors: {
-    origin:
-      'https://social-media-frotend-gh3x-npp4ki0yy-otavin23s-projects.vercel.app/',
+    origin: 'https://social-media-five-gold.vercel.app/',
     methods: ['GET', 'POST'],
     allowedHeaders: ['my-custom-header'],
     credentials: true,
