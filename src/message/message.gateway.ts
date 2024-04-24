@@ -22,6 +22,7 @@ export interface socketMetaPayload {
 
 @WebSocketGateway({
   crossOriginIsolated: true,
+
   cors: {
     origin: 'https://socialmedia-backend-z59r.onrender.com',
     methods: ['GET', 'POST'],

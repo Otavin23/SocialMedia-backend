@@ -9,13 +9,14 @@ import { Server } from 'socket.io';
 
 const socketIo = new Server({
   cors: {
+    credentials: true,
+    allowedHeaders: ['Authorization', 'X-Custom-Header'],
     origin: 'https://socialmedia-backend-z59r.onrender.com',
   },
 });
 
 socketIo.on('connection', (socket) => {
   socket.on('newEvent', (event) => {
-    console.log(event);
     socket.emit('parafront', 'hello');
   });
 
