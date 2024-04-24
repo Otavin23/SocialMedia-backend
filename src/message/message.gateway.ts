@@ -23,7 +23,7 @@ export interface socketMetaPayload {
 @WebSocketGateway({
   crossOriginIsolated: true,
   cors: {
-    origin: 'http://localhost:3000',
+    origin: 'https://socialmedia-backend-z59r.onrender.com',
     methods: ['GET', 'POST'],
     allowedHeaders: ['my-custom-header'],
     credentials: true,
