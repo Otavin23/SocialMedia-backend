@@ -67,6 +67,10 @@ class UserService {
     await this.bd_user.save(user);
     return user;
   }
+
+  async EditDescriptionUser(id: string, description: string) {
+    await this.bd_user.update({ id }, { description });
+  }
 }
 
 export { UserService };

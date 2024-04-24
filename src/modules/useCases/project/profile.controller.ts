@@ -17,17 +17,6 @@ import { Request, Response } from 'express';
 class ProfileController {
   constructor(private ProfileServices: ProfileService) {}
 
-  // @Post('/description')
-  // async descriptionEdit(@Req() request: Request, @Res() response: Response) {
-  //   const { id, description } = request.body;
-
-  //   const EditDescription = await this.ProfileServices.descriptionEdit(
-  //     id,
-  //     description,
-  //   );
-
-  //   return response.status(200).json(EditDescription);
-  // }
   @Post('/create/project')
   @UseInterceptors(FileInterceptor('media'))
   async createProject(

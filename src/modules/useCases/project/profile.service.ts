@@ -9,13 +9,6 @@ class ProfileService {
   private bd_user = AppDataSource.getRepository(Projects);
   private bd_user2 = AppDataSource.getRepository(User);
 
-  // async descriptionEdit(id: string, description: string) {
-  //   // const user = await this.bd_user.findOneBy({ id });
-  //   // user.description = description;
-  //   // await this.bd_user.save(user);
-  //   // return user;
-  // }
-
   async createProject(
     id: string,
     name: string,

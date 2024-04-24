@@ -38,7 +38,7 @@ class postsService {
 
     const comment = this.bd__comments.create({
       description,
-      user: { avatar: user.avatar, name: user.name },
+      user: { avatar: user.avatar, name: user.name, id: user.id },
     });
 
     publication.comments.push(comment);

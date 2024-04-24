@@ -3,6 +3,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
   Req,
   Res,
   UploadedFile,
@@ -113,6 +114,7 @@ class UserController {
 
     return response.status(200).json(uploadImageBackground);
   }
+
   @Get('me/verify')
   async verifyToken(@Res() response: Response) {
     const { userId } = response.locals;
@@ -131,6 +133,17 @@ class UserController {
     }
 
     return response.status(200).json(user);
+  }
+
+  @Put('profile/description')
+  async DescriptionEdit(@Req() request: Request, @Res() response: Response) {
+    const { id, description } = request.body;
+    const descriptionEdit = await this.UserServices.EditDescriptionUser(
+      id,
+      description,
+    );
+
+    return response.status(200).json(descriptionEdit);
   }
 }
 

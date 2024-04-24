@@ -13,6 +13,7 @@ class Comments {
   user: {
     avatar: string;
     name: string;
+    id: string;
   };
 
   @CreateDateColumn()
