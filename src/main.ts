@@ -9,9 +9,7 @@ import { Server } from 'socket.io';
 
 const socketIo = new Server({
   cors: {
-    credentials: true,
-    allowedHeaders: ['Authorization', 'X-Custom-Header'],
-    origin: 'https://socialmedia-backend-z59r.onrender.com',
+    origin: 'https://social-media-frotend.vercel.app/user/signin',
   },
 });
 
