@@ -22,9 +22,8 @@ export interface socketMetaPayload {
 
 @WebSocketGateway({
   crossOriginIsolated: true,
-
   cors: {
-    origin: 'https://social-media-five-gold.vercel.app/',
+    origin: 'https://social-media-five-gold.vercel.app',
     methods: ['GET', 'POST'],
     allowedHeaders: ['my-custom-header'],
     credentials: true,
