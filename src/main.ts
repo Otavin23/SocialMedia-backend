@@ -9,7 +9,7 @@ import { Server } from 'socket.io';
 
 const socketIo = new Server({
   cors: {
-    origin: 'http://localhost:3000',
+    origin: 'https://socialmedia-backend-z59r.onrender.com',
   },
 });
 
