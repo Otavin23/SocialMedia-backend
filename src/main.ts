@@ -9,7 +9,7 @@ import { Server } from 'socket.io';
 
 const socketIo = new Server({
   cors: {
-    origin: 'https://social-media-frotend.vercel.app/user/signin',
+    origin: 'https://social-media-frotend.vercel.app/',
   },
 });
 

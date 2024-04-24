@@ -24,7 +24,7 @@ export interface socketMetaPayload {
   crossOriginIsolated: true,
 
   cors: {
-    origin: 'https://socialmedia-backend-z59r.onrender.com',
+    origin: 'https://social-media-frotend.vercel.app/',
     methods: ['GET', 'POST'],
     allowedHeaders: ['my-custom-header'],
     credentials: true,
