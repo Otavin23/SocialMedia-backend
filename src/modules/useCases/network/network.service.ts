@@ -17,6 +17,17 @@ class NetworkService {
       where: { id: user__id },
     });
 
+    const filterAlreadyExists = user.invitations.find(
+      (user) => user.id === secondaryUser.id,
+    );
+
+    const filterAlreadyExistUser = secondaryUser.invitations.find(
+      (user2) => user2.id === user.id,
+    );
+
+    if (filterAlreadyExists || filterAlreadyExistUser)
+      throw new Error('Pedido de amizade já enviado verifique os convites');
+
     const filterAlreadyExistsInvitations = secondaryUser.invitations.find(
       (invitation) => invitation.id === user.id,
     );

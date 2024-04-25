@@ -25,16 +25,18 @@ class PublicationsController {
     @Res() response: Response,
   ) {
     const { description, id } = request.body;
-
-    const { mimetype } = request.file;
-
-    const b64 = Buffer.from(request.file.buffer).toString('base64');
-    const pathImage = 'data:' + mimetype + ';base64,' + b64;
+    let pathname;
+    if (media) {
+      const { mimetype } = request.file;
+      const b64 = Buffer.from(request.file.buffer).toString('base64');
+      const pathImage = 'data:' + mimetype + ';base64,' + b64;
+      pathname = pathImage;
+    }
 
     const createPublication = await this.PublicationServices.createPublication(
       description,
       id,
-      pathImage,
+      pathname,
     );
 
     return response.status(200).json(createPublication);
@@ -42,7 +44,6 @@ class PublicationsController {
 
   @Delete('delete/:id')
   async deletePublication(@Param('id') id: string, @Res() response: Response) {
-    console.log(id);
     const deleteUser = await this.PublicationServices.deletePublication(id);
 
     return response.status(200).json(deleteUser);
