@@ -11,6 +11,7 @@ import { Projects } from './Project';
 import { Publications } from './Publications';
 import { NotificationEntity } from './notification';
 import { Chat } from './message';
+import { IFollowers } from './@types/followers';
 
 @Entity('user')
 class User {
@@ -54,7 +55,7 @@ class User {
   projects: Projects[];
 
   @Column({ type: 'jsonb', default: [] })
-  followers: any[];
+  followers: IFollowers[];
 
   @Column({ type: 'jsonb', default: [] })
   invitations: any[];

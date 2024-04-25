@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { User } from 'src/entity/User';
 import { AppDataSource } from 'src/database/data-source';
 import { Chat } from 'src/entity/message';
+import { Not } from 'typeorm';
 
 @Injectable()
 class NetworkService {
@@ -116,11 +117,13 @@ class NetworkService {
 
   async networkLists(removeId: string) {
     const user = await this.bd_user.find({
+      where: {
+        id: Not(removeId),
+      },
       order: { craeted_at: 'DESC' },
     });
 
-    const filterUsers = user.map((user) => user.id !== removeId && user);
-    return filterUsers.filter((user) => user);
+    return user;
   }
 
   async listMarks(id: string) {

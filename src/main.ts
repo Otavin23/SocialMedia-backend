@@ -9,7 +9,7 @@ import { Server } from 'socket.io';
 
 const socketIo = new Server({
   cors: {
-    origin: 'https://social-media-five-gold.vercel.app/',
+    origin: 'https://social-media-oc07cm5py-otavin23s-projects.vercel.app/',
   },
 });
 
@@ -36,6 +36,6 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
 
-  await app.listen(process.env.PORT || 3001);
+  await app.listen(process.env.PORT);
 }
 bootstrap();
