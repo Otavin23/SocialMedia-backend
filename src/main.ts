@@ -9,7 +9,9 @@ import { Server } from 'socket.io';
 
 const socketIo = new Server({
   cors: {
-    origin: 'https://social-media-oc07cm5py-otavin23s-projects.vercel.app/',
+    origin: 'https://social-media-oc07cm5py-otavin23s-projects.vercel.app',
+    methods: ['GET', 'POST'],
+    credentials: true,
   },
 });
 
