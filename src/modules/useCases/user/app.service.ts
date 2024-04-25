@@ -55,7 +55,6 @@ class UserService {
     const user = await this.bd_user.findOneBy({ id });
 
     const imageUpload = await cloudinary.uploader.upload(image, {
-      public_id: 'olimpic',
       folder: 'avatars',
       resource_type: 'image',
       format: 'svg',
