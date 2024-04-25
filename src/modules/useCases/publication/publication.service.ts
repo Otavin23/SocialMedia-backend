@@ -23,7 +23,6 @@ class PublicationService {
 
     if (pathName) {
       const imageUpload = await cloudinary.uploader.upload(pathName, {
-        public_id: 'olimpic',
         folder: 'avatars',
         resource_type: 'image',
         format: 'svg',
