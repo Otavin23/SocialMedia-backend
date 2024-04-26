@@ -23,7 +23,7 @@ export interface socketMetaPayload {
 @WebSocketGateway({
   crossOriginIsolated: true,
   cors: {
-    origin: 'https://social-media-otavin23s-projects.vercel.app',
+    origin: 'https://social-media-frotend.vercel.app',
     methods: ['GET', 'POST'],
     credentials: true,
   },
